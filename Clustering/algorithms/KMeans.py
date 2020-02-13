@@ -13,14 +13,17 @@ class KMeans:
          there is an entry of 1 if the datapoint belongs to class, and 0 otherwise
          n datapoints, d dimensions, k centroids"""
         self.X = X
+        self.H = None
         if initialization == "random":
             # Arbitrarily choose k initial centers
             self.M = X.sample(k)
-            self.H = None
 
         elif initialization == "kmeans++":
-            X.sample(weights=self.new_centroid_probability_vector())
+            self.M = X.sample()
             # update centroid matrix with https://pandas.pydata.org/docs/user_guide/indexing.html#setting-with-enlargement
+            for x in range(k - 1):
+                self.M.concat(pd.DataFrame(X.sample(weights=self.new_centroid_probability_vector())))
+
         elif initialization == "global":
             pass
         else:
