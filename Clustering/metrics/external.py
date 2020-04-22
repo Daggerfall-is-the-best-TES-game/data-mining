@@ -38,7 +38,7 @@ def normalized_mutual_information(contingency_matrix):
 
 def normalized_rand_index(contingency_matrix):
     c = contingency_matrix
-    dim = range(c.shape[0])
+    dim = range(c.shape[0])111
     m = sum(comb(c[i, j], 2) for i in dim for j in dim)
     m1 = sum(comb(c[i, :].sum(), 2) for i in dim)
     m2 = sum(comb(c[:, j].sum(), 2) for j in dim)

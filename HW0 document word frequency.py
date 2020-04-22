@@ -9,7 +9,7 @@ def most_frequent(word_set_length = 3):
     for file in listdir("docs/"):
         word_frequencies += Counter(combinations(words(file), r=word_set_length))
 
-    return word_frequencies.most_common(1)
+    return word_frequencies.most_common(8)
 
 
 def words(file_name):

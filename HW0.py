@@ -37,5 +37,6 @@ def s(p1_index, p2_index):
 similarity_matrix = np.empty(shape=(len(data), len(data)))
 for x in range(len(data)):
     for y in range(len(data)):
-        similarity_matrix[x, y] = int(s(x, y) < 5e11)
+        similarity_matrix[x, y] = s(x, y)
+similarity_matrix = np.around(similarity_matrix, 3)
 print(f"similarity matrix:{similarity_matrix}")

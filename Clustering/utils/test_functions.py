@@ -1,6 +1,6 @@
 from unittest import TestCase
 import numpy as np
-from Clustering.utils.functions import submatrix, distance
+from Clustering.utils.functions import submatrix, euclidean_distance
 
 
 class Test(TestCase):
@@ -11,4 +11,4 @@ class Test(TestCase):
     def test_distance(self):
         a = np.array([1, 0])
         b = np.array([0, 1])
-        np.testing.assert_array_equal(distance(a, b), np.sqrt(2))
+        np.testing.assert_array_equal(euclidean_distance(a, b), np.sqrt(2))

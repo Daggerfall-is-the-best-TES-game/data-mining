@@ -13,6 +13,6 @@ def submatrix(array, indices):
     return a
 
 
-def distance(a, b):
+def euclidean_distance(a, b):
     """computes the squared euclidean distance between two vectors"""
     return np.linalg.norm(a - b).item()

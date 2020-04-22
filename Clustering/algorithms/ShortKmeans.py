@@ -5,7 +5,7 @@ from Clustering.utils.functions import euclidean_distance
 
 
 class KMeans:
-    def __init__(self, X, initialization="random", iteration_type="lloyd", distance=euclidean_distance, k=5):
+    def __init__(self, X, initialization="random", iteration_type="lloyd", k=5):
         """perform k-means clustering on the data in X, where X is a pandas dataframe of records data
          X is an n by d matrix, where d is the number of features and n is the number of data points
          M is a k by d  matrix of centroids, where each row is a centroid, and there are k classes
@@ -36,8 +36,6 @@ class KMeans:
         else:
             raise ValueError(f"{iteration_type} is not a defined type of iteration")
 
-        self.distance = distance
-
     def new_centroid_probability_vector(self):
         """returns a n-vector of distances of each point from its closest centroid """
 
@@ -46,13 +44,13 @@ class KMeans:
             returns the closest centroid to x"""
             return self.closest_centroid_indicator_vector(x, self.M) * self.M
 
-        np.array(self.distance(x, closest_centroid(x)) ** 2 for x in self.X.iterrows())
+        np.array(euclidean_distance(x, closest_centroid(x)) ** 2 for x in self.X.iterrows())
 
     def closest_centroid_indicator_vector(self, x, y):
         """x is a datapoint, y is the matrix of centroids
         returns vector b such that b * y is the closest centroid"""
         minimum = np.zeros(y.shape[0])
-        distances = pd.DataFrame(self.distance(x, z) for _, z in y.iterrows())
+        distances = pd.DataFrame(euclidean_distance(x, z) for _, z in y.iterrows())
         min_index = distances.idxmin().iat[0]
         minimum[min_index] = 1
         return minimum
@@ -68,5 +66,3 @@ class KMeans:
             # move centroids
             self.M = pd.DataFrame(self.H.loc[:, col].dot(self.X) / self.H.loc[:, col].sum() for col in self.H)
 
-    def hartigan_iteration(self):
-        pass
