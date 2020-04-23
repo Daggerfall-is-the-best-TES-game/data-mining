@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.special import rel_entr
 
 
 def submatrix(array, indices):
@@ -16,3 +17,7 @@ def submatrix(array, indices):
 def euclidean_distance(a, b):
     """computes the squared euclidean distance between two vectors"""
     return np.linalg.norm(a - b).item()
+
+def KL_divergence(a, b):
+    """computes the Kullback-Leibler divergence between two vectors"""
+    return sum(rel_entr(a, b))

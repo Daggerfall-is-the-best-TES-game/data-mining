@@ -14,6 +14,7 @@ class KMeans:
          n datapoints, d dimensions, k centroids"""
         self.X = X
         self.H = None
+        self.distance = distance
         if initialization == "random":
             # Arbitrarily choose k initial centers
             self.M = X.sample(k)
@@ -22,7 +23,7 @@ class KMeans:
             self.M = X.sample()
             # update centroid matrix with https://pandas.pydata.org/docs/user_guide/indexing.html#setting-with-enlargement
             for x in range(k - 1):
-                self.M.concat(pd.DataFrame(X.sample(weights=self.new_centroid_probability_vector())))
+                self.M.append(pd.DataFrame(X.sample(weights=self.new_centroid_probability_vector())))
 
         elif initialization == "global":
             pass
@@ -36,7 +37,7 @@ class KMeans:
         else:
             raise ValueError(f"{iteration_type} is not a defined type of iteration")
 
-        self.distance = distance
+
 
     def new_centroid_probability_vector(self):
         """returns a n-vector of distances of each point from its closest centroid """
@@ -65,6 +66,8 @@ class KMeans:
             if new_H.equals(self.H):
                 break
             self.H = new_H
+            # remove empty clusters
+
             # move centroids
             self.M = pd.DataFrame(self.H.loc[:, col].dot(self.X) / self.H.loc[:, col].sum() for col in self.H)
 
